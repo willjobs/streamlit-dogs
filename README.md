@@ -1,2 +1,2 @@
 # streamlit-dogs
-Implementation of a dog classifier using CNNs built using FastAI
+Copy of [dog-classifier](https://github.com/willjobs/dog-classifier) for sharing via Streamlit sharing.
