@@ -5,7 +5,7 @@ from fastai.learner import load_learner
 from fastai.vision.core import PILImage
 import streamlit as st
 
-AWS_DIR = 'https://wjdogs.s3.amazonaws.com'
+REPO_DIR = 'https://github.com/willjobs/dog-classifier/raw/main'
 MODEL_FILE = 'dogs_online_resnet50_cpu.pkl'
 
 st.set_page_config(
@@ -90,7 +90,7 @@ def fix_rotation(file_data):
 @st.cache(allow_output_mutation=True)
 def get_model():
     if not os.path.isfile(MODEL_FILE):
-        _ = download_file(f'{AWS_DIR}/{MODEL_FILE}')
+        _ = download_file(f'{REPO_DIR}/models/{MODEL_FILE}')
 
     learn = load_learner(MODEL_FILE)
     return learn
@@ -113,7 +113,7 @@ if file_data is not None:
         out_text = '<table><tr> <th>Breed</th> <th>Confidence</th> <th>Example</th> </tr>'
 
         for pred in top5_preds:
-            example = AWS_DIR + '/' + pred[0].replace(" ", "").lower() + ".jpg"
+            example = REPO_DIR + '/example_dogs/' + pred[0].replace(" ", "").lower() + ".jpg"
             out_text += '<tr>' + \
                             f'<td>{pred[0]}</td>' + \
                             f'<td>{100 * pred[1]:.02f}%</td>' + \
@@ -124,4 +124,4 @@ if file_data is not None:
         st.write('## What the model thinks')
         st.markdown(out_text, unsafe_allow_html=True)
 
-        st.write(f"🤔 Don't see your dog breed? For a full list of dog breeds in this project, [click here]({AWS_DIR}/dog_breeds.html).")
+        st.write(f"🤔 Don't see your dog breed? For a full list of dog breeds in this project, [click here](https://htmlpreview.github.io/?https://github.com/willjobs/dog-classifier/blob/main/dog_breeds.html).")
